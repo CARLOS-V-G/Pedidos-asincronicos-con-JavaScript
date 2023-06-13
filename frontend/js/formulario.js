@@ -12,16 +12,15 @@ window.onload = async() => {
 
         let response = await fetch(urlBase + id)
         let peliculas = await response.json()
-        console.log(peliculas);
         let {title, rating, awards, length:duracion, release_date,genre_id} = peliculas.data
-        /* let releaseDateFormatted = moment(release_date).format('YYYY-MM-DD'); */
+        let releaseDateFormatted = moment(release_date).format('YYYY-MM-DD');
 
         $('title').value = title;
         $('rating').value = rating;
         $('awards').value = awards;
         $('length').value = duracion;
         $('genre_id').value = genre_id;
-        /* $('release_date').value = releaseDateFormatted; */
+        $('release_date').value = releaseDateFormatted;
 
 
         
@@ -68,7 +67,7 @@ window.onload = async() => {
             });
             successMessage = 'Película creada con éxito'
         }else if (erase.checked){
-            response = await fetch(urlBase+/delete/+id, {
+            response = await fetch(urlBase +'delete/'+id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -89,7 +88,7 @@ window.onload = async() => {
         console.log(result);
 
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 });
     

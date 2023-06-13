@@ -20,7 +20,7 @@
         </div>
         <div>
             <label for="rating">Calificación </label>
-            <p><input type="number" name="rating" id="rating" required></p>
+            <p><input type="number" name="rating" id="rating"  step="any" required></p>
         </div>
         <div>
         <label for="awards">Premios </label>
@@ -34,6 +34,21 @@
             <label for="length">Duración </label>
             <p><input type="number" name="length" id="length" required></p>
         </div>
+        <div>
+            <label for="genre_id">Genero </label>
+        <p><select name="genre_id" id="genre_id" required>
+            <option value="1">Comedia</option>
+            <option value="2">Terror</option>
+            <option value="3">Drama</option>
+            <option value="4">Accion</option>
+            <option value="5">Ciencia Ficcion</option>
+            <option value="6">Suspenso</option>
+            <option value="7">Animacion</option>
+            <option value="8">Aventura</option>
+
+        </select></p>
+        </div>
+        <label class="erase_form" for="erase">Desea eliminar? <input type="checkbox" name="erase" id="erase"></label>
         
         <br>
         <div class="action">
@@ -43,5 +58,7 @@
         </div>
     </form>
     <script src="js/formulario.js"></script>
+    <script src="js/libraries/moment.js"></script>
+
 </body>
 </html>
