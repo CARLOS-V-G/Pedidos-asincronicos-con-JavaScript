@@ -133,4 +133,5 @@ background-color: #666;
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: column;
 }

@@ -1,16 +1,15 @@
-window.onload = async() => {
+window.onload = async () => {
   const app = document.getElementById("root");
   const container = document.createElement("div");
   container.setAttribute("class", "container");
   app.appendChild(container);
 
-  // Aqui debemos agregar nuestro fetch
+  try {
+    let response = await fetch("http://localhost:3031/api/movies");
+    let peliculas = await response.json();
+    let data = peliculas.data;
 
-try {
-  let response = await fetch('http://localhost:3031/api/movies')
-  let peliculas = await response.json()
-
-  let data = peliculas.data;
+    let favoriteIds = JSON.parse(sessionStorage.getItem("ids")) || [];
 
     data.forEach((movie) => {
       const card = document.createElement("div");
@@ -35,16 +34,47 @@ try {
       }
       card.appendChild(duracion);
 
-      const a = document.createElement("a")
-      a.setAttribute("href", "formulario.html?id=" + movie.id)
+      const a = document.createElement("a");
+      a.setAttribute("href", "formulario.html?id=" + movie.id);
       a.setAttribute("class", "botonAgregar");
-      a.textContent = "Ver más"
-      card.appendChild(a)
-      
+      a.textContent = "Ver más";
+      card.appendChild(a);
+
+      const addButton = document.createElement("button");
+      addButton.setAttribute("class", "botonAgregar");
+      addButton.textContent = "Agregar a Favoritos";
+      card.appendChild(addButton);
+
+      if (favoriteIds.includes(movie.id)) {
+        addButton.classList.add("botonFavorito"); // Agregar la clase botonFavorito
+        addButton.textContent = "Remover de Favoritos";
+      }
+
+      addButton.addEventListener("click", () => {
+        toggleFavorite(movie.id);
+        if (favoriteIds.includes(movie.id)) {
+          addButton.classList.remove("botonFavorito"); // Quitar la clase botonFavorito
+          addButton.textContent = "Agregar a Favoritos";
+        } else {
+          addButton.classList.add("botonFavorito"); // Agregar la clase botonFavorito
+          addButton.textContent = "Remover de Favoritos";
+        }
+        location.reload(); // Recargar la página
+      });
     });
+  } catch (error) {
+    console.error(error);
+  }
 
-} catch (error) {
-  console.error
-}
-
+  function toggleFavorite(movieId) {
+    let favoriteIds = JSON.parse(sessionStorage.getItem("ids")) || [];
+    const index = favoriteIds.indexOf(movieId);
+    if (index > -1) {
+      favoriteIds.splice(index, 1);
+    } else {
+      favoriteIds.push(movieId);
+    }
+    sessionStorage.setItem("ids", JSON.stringify(favoriteIds));
+  }
 };
+
