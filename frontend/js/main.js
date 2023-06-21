@@ -45,26 +45,19 @@ window.onload = async () => {
       addButton.textContent = "Agregar a Favoritos";
       card.appendChild(addButton);
 
-      if (favoriteIds.includes(movie.id)) {
-        addButton.classList.add("botonFavorito"); // Agregar la clase botonFavorito
-        addButton.textContent = "Remover de Favoritos";
-      }
+      updateButtonState(addButton, movie.id)
 
-      addButton.addEventListener("click", () => {
+      addButton.addEventListener("click", () => {{
         toggleFavorite(movie.id);
-        if (favoriteIds.includes(movie.id)) {
-          addButton.classList.remove("botonFavorito"); // Quitar la clase botonFavorito
-          addButton.textContent = "Agregar a Favoritos";
-        } else {
-          addButton.classList.add("botonFavorito"); // Agregar la clase botonFavorito
-          addButton.textContent = "Remover de Favoritos";
-        }
-        location.reload(); // Recargar la página
-      });
+        updateButtonState(addButton, movie.id)
+      }})
+
     });
   } catch (error) {
     console.error(error);
   }
+
+  
 
   function toggleFavorite(movieId) {
     let favoriteIds = JSON.parse(sessionStorage.getItem("ids")) || [];
@@ -76,5 +69,19 @@ window.onload = async () => {
     }
     sessionStorage.setItem("ids", JSON.stringify(favoriteIds));
   }
-};
 
+  function updateButtonState(button, movieId) {
+    let favoriteIds = JSON.parse(sessionStorage.getItem("ids")) || [];
+
+    if(favoriteIds.includes(movieId)){
+      button.classList.add("botonFavorito")
+      button.textContent = "Remover de Favoritos";
+    }else{
+      button.classList.remove("botonFavorito");
+      button.textContent = "Agregar a Favoritos";
+    }
+  }
+
+
+  
+};

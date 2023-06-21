@@ -25,6 +25,14 @@ window.onload = async () => {
     console.error(error);
   }
 
+  if (id) {
+    document.querySelector('.boton-crear').disabled = true;
+    document.querySelector('.boton-eliminar').disabled = false;
+  } else {
+    document.querySelector('.boton-crear').disabled = false;
+    document.querySelector('.boton-eliminar').disabled = true;
+  }
+
   document.querySelector('.boton-editar').addEventListener('click', async (e) => {
     e.preventDefault();
 
@@ -102,6 +110,7 @@ window.onload = async () => {
         },
       });
 
+    
       let successMessage = 'Película eliminada con éxito';
 
       let body = qs('body');
@@ -116,5 +125,7 @@ window.onload = async () => {
     } catch (error) {
       console.log(error);
     }
+  
+
   });
 };
